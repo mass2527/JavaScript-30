@@ -1,4 +1,4 @@
-# JavaScript-30
+# JavaScript 30
 `1 project per day to master JavaScript`
 
 This is free javascript course.  
