@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML5 Canvas</title>
+  </head>
+  <body>
+    <canvas id="draw" width="800" height="800"></canvas>
+    <script>
+      const canvas = document.querySelector('canvas');
+      const ctx = canvas.getContext('2d');
+      let [preX, preY] = [0, 0];
+      let isMouseDown = false;
+      let hue = 0;
+      let direction;
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      ctx.lineCap = 'round';
+
+      const handleMouseDown = (e) => {
+        [preX, preY] = [e.offsetX, e.offsetY];
+        isMouseDown = true;
+      };
+
+      const handleMouseUp = () => (isMouseDown = false);
+      const handleMouseLeave = () => (isMouseDown = false);
+
+      const handleMouse = (e) => {
+        if (!isMouseDown) return;
+        ctx.beginPath();
+        ctx.strokeStyle = `hsl(${hue},100%,50%)`;
+        ctx.lineWidth = hue;
+        ctx.moveTo(preX, preY);
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+        [preX, preY] = [e.offsetX, e.offsetY];
+
+        if (hue > 100) {
+          direction = false;
+        } else if (hue < 0) {
+          direction = true;
+        }
+
+        direction ? hue++ : hue--;
+      };
+
+      canvas.addEventListener('mousedown', handleMouseDown);
+      canvas.addEventListener('mouseup', handleMouseUp);
+      canvas.addEventListener('mouseleave', handleMouseLeave);
+      canvas.addEventListener('mousemove', handleMouse);
+    </script>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+      }
+
+      canvas {
+        background-color: #e74c3c;
+        margin: 0px;
+      }
+    </style>
+  </body>
+</html>
