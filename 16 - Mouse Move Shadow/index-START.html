@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mouse Shadow</title>
+  </head>
+  <body>
+    <div class="hero">
+      <h1 contenteditable>🔥WOAH!</h1>
+    </div>
+
+    <style>
+      html {
+        color: black;
+        font-family: sans-serif;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: black;
+      }
+
+      h1 {
+        text-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+        font-size: 100px;
+      }
+    </style>
+
+    <script>
+      const hero = document.querySelector('.hero');
+      const title = document.querySelector('h1');
+      const { offsetWidth: heroWidth, offsetHeight: heroHeight } = hero;
+
+      const RANGE = 100;
+
+      function handleMouseMove(e) {
+        let { offsetX: x, offsetY: y } = e;
+        console.log(e.target.offsetParent);
+        if (e.target !== hero) {
+          x += e.target.offsetLeft;
+          y += e.target.offsetTop;
+        }
+
+        const rangeX = Math.round((x / heroWidth) * RANGE - RANGE / 2);
+        const rangeY = Math.round((y / heroHeight) * RANGE - RANGE / 2);
+
+        title.style.textShadow = `${rangeX}px ${rangeY}px 0px #3498db,
+        ${rangeX * -1}px ${rangeY}px 0px #f1c40f,
+        ${rangeX}px ${rangeY * -1}px 0px #2ecc71,
+        ${rangeX * -1}px ${rangeY * -1}px 0px #34495e`;
+      }
+
+      hero.addEventListener('mousemove', handleMouseMove);
+    </script>
+  </body>
+</html>
